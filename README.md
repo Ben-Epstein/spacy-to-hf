@@ -7,12 +7,12 @@ format for tagging entities for NER.
 
 This repo is a simple converter that leverages `spacy.gold.biluo_tags_from_offsets`
 and the SpaCy `tokenizations` repo that creates a 1-line function to convert spacy
-formatted spans to `ner_tags` that can be fed into any Token Classification Transformer
+formatted spans to `tokens` and `ner_tags` that can be fed into any
+Token Classification Transformer
 
 ## Installation
 ```shell
 pip install spacy-to-hf
-pyenv rehash
 python -m spacy download en_core_web_sm
 ````
 
@@ -32,7 +32,7 @@ span_data = [
     }
 ]
 hf_data = spacy_to_hf(span_data, "bert-base-cased")
-list(zip(hf_data["tokens"][0], hf_data["ner_tags"][0]))
+print(list(zip(hf_data["tokens"][0], hf_data["ner_tags"][0])))
 ds = Dataset.from_dict(hf_data)
 ```
 
