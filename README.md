@@ -23,7 +23,8 @@ This is the common structure of output data from labeling tools like LabelStudio
 
 Huggingface format refers to the BIO/BILOU/BIOES tagging format commonly used for fine-tuning transformers. The input text is tokenized, and each token
 is given a tag to denote whether or not it's a label. Here's an example: https://huggingface.co/datasets/wikiann
-<img width="757" alt="image" src="https://user-images.githubusercontent.com/22605641/236638634-d2e89425-ebc7-4247-b710-91a8bf505d8f.png">
+<img width="591" alt="image" src="https://user-images.githubusercontent.com/22605641/236639209-031c6645-e67d-43dc-8d38-be39868d2cd3.png">
+
 
 This format is tricky because it is entirely dependant on the tokenizer used. That's a core reason I built this tool. 
 
