@@ -11,6 +11,9 @@ creates a 1-line function to convert spacy
 formatted spans to `tokens` and `ner_tags` that can be fed into any
 Token Classification Transformer
 
+## Try before you buy
+You can demo the functionality [here](https://ben-epstein-spacy-to-hf-demoapp-3u5okj.streamlit.app/)
+
 ## What is "Spacy" or "HuggingFace" format?
 Spacy format simply means having a text input and character level span assignments. <br>
 For example:
