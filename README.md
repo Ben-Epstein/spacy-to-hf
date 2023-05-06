@@ -39,5 +39,4 @@ ds = Dataset.from_dict(hf_data)
 From here, you can label-index your ner_tags and prepare for fine-tuning
 
 ## Project Setup
-Project setup is credited to @anthonycorletti and his awesome repo
-https://github.com/anthonycorletti/python-project-template
+Project setup is credited to [@anthonycorletti](https://github.com/anthonycorletti) and his awesome [project template repo](https://github.com/anthonycorletti/python-project-template)
