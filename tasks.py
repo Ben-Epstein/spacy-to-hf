@@ -3,8 +3,6 @@ from enum import Enum, unique
 from invoke import task
 from invoke.context import Context
 
-from spacy_to_hf import __version__
-
 PACKAGE_NAME = "spacy_to_hf"
 VERSION_FILE = f"{PACKAGE_NAME}/__init__.py"
 SOURCES = " ".join(["spacy_to_hf", "tests", "tasks.py"])
@@ -217,6 +215,8 @@ def update_version_number(ctx: Context, part: BumpType = BumpType.MICRO) -> None
     Specify the part of the version number to bump. The default is to bump the
     micro version number. Other options are major and minor.
     """
+    from spacy_to_hf import __version__
+
     print(f"Current version: {__version__}")
     new_version = _bump_version(__version__, part)
     with open(VERSION_FILE, "r") as f:
