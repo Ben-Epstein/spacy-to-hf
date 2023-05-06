@@ -1,8 +1,8 @@
 import json
-import os
 from json import JSONDecodeError
 
 import spacy
+import spacy.cli
 import streamlit as st
 from datasets import Dataset
 
@@ -11,7 +11,7 @@ from spacy_to_hf import spacy_to_hf
 try:
     nlp = spacy.load("en_core_web_sm")
 except Exception:
-    os.system("spacy download en_core_web_sm")
+    spacy.cli.download("en_core_web_sm")
     st.experimental_rerun()
 
 
