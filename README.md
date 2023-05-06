@@ -6,9 +6,26 @@ on using huggingface transformers. But Spacy's Entity format is the most intuiti
 format for tagging entities for NER.
 
 This repo is a simple converter that leverages `spacy.gold.biluo_tags_from_offsets`
-and the SpaCy `tokenizations` repo that creates a 1-line function to convert spacy
+and the SpaCy [`tokenizations`](https://github.com/explosion/tokenizations) repo that 
+creates a 1-line function to convert spacy
 formatted spans to `tokens` and `ner_tags` that can be fed into any
 Token Classification Transformer
+
+## What is "Spacy" or "HuggingFace" format?
+Spacy format simply means having a text input and character level span assignments. <br>
+For example:
+```python
+text = "Hello, my name is Ben"
+spans = [{"start": 18, "end": 21, "label": "person"}, ...]
+```
+    
+This is the common structure of output data from labeling tools like LabelStudio or LabelBox, because it's easy and human interpretable. 
+
+Huggingface format refers to the BIO/BILOU/BIOES tagging format commonly used for fine-tuning transformers. The input text is tokenized, and each token
+is given a tag to denote whether or not it's a label. Here's an example: https://huggingface.co/datasets/wikiann
+<img width="757" alt="image" src="https://user-images.githubusercontent.com/22605641/236638634-d2e89425-ebc7-4247-b710-91a8bf505d8f.png">
+
+This format is tricky because it is entirely dependant on the tokenizer used. That's a core reason I built this tool. 
 
 ## Installation
 ```shell
