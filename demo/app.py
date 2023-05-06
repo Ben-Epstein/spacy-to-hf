@@ -11,7 +11,7 @@ from spacy_to_hf import spacy_to_hf
 try:
     nlp = spacy.load("en_core_web_sm")
 except Exception:
-    os.system("python -m spacy download en_core_web_sm")
+    os.system("spacy download en_core_web_sm")
     st.experimental_rerun()
 
 
