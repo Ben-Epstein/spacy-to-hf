@@ -1,0 +1,3 @@
+streamlit
+spacy-to-hf
+datasets
