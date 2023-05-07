@@ -1,5 +1,5 @@
 # spacy-to-hf
-A simple converter from Spacy Entities to Huggingface BILOU formatted data
+A simple converter from SpaCy Entities (Spans) to Huggingface BILOU formatted data (tokens and ner_tags)
 
 I've always struggled to convert my spacy formatted spans into data that can be trained
 on using huggingface transformers. But Spacy's Entity format is the most intuitive
