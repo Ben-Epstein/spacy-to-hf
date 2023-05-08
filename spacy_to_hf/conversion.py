@@ -1,16 +1,19 @@
-from typing import Collection, Dict, List, Sequence
+from typing import Collection, Dict, List, Sequence, Union
 
 import spacy
+from datasets import Dataset
 from spacy.gold import biluo_tags_from_offsets
 from tokenizations import get_alignments
 from transformers import AutoTokenizer
 
-from spacy_to_hf.utils import map_spacy_to_hf_tags
+from spacy_to_hf.utils import dict_to_dataset, map_spacy_to_hf_tags
 
 
 def spacy_to_hf(
-    spacy_data: List[Dict[str, Sequence[Collection[str]]]], tokenizer: str
-) -> Dict[str, List[str]]:
+    spacy_data: List[Dict[str, Sequence[Collection[str]]]],
+    tokenizer: str,
+    as_hf_dataset: bool = False,
+) -> Union[Dataset, Dict[str, List[List[str]]]]:
     """Maps spacy formatted spans to HF tokens in BILOU format
 
     Input should be a list of dictionaries of 'text' and 'spans' keys
@@ -52,6 +55,14 @@ def spacy_to_hf(
                      ('##U', 'L-university')]
 
 
+    :param spacy_data: The spacy formatted span data. Must be a list containing
+        "text" key and "spans" key. "spans" must be a list of dictionaries with
+        "start", "end", and "label"
+    :param tokenizer: The tokenizer/model you will be training with in huggingface.
+        A good option could be "bert-base-uncased"
+    :param as_hf_dataset: If this should return a formatted Huggingface Dataset. If
+        True, the dataset will have `tokens` and `ner_tags` as columns, and `ner_tags`
+        will be a ClassLabel
     """
     assert all(
         sorted(row.keys()) == ["spans", "text"] for row in spacy_data
@@ -76,4 +87,6 @@ def spacy_to_hf(
         hf_tags = map_spacy_to_hf_tags(hf_to_spacy, spacy_tags)
         hf_data["tokens"].append(hf_tokens)
         hf_data["ner_tags"].append(hf_tags)
+    if as_hf_dataset:
+        return dict_to_dataset(hf_data)
     return hf_data
