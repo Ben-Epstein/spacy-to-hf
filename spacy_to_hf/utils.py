@@ -1,4 +1,7 @@
-from typing import List
+from itertools import chain
+from typing import Dict, List
+
+from datasets import ClassLabel, Dataset, Sequence
 
 
 def next_token_is_same(tokens: List[List[int]], cur_idx: int, tok_num: int) -> bool:
@@ -128,3 +131,33 @@ def map_spacy_to_hf_tags(
 
         hf_tags.extend(clean_hf_tags)
     return hf_tags
+
+
+def dict_to_dataset(hf_data: Dict[str, List[str]]) -> Dataset:
+    """Converts a dictionary of huggingface data into a well-formed Dataset
+
+    ex input:
+        {
+            "tokens": [["sentence", "1"], ["sentence", "Apple"]],
+            "ner_tags": [["U-word", "O"], ["U-word", "U-ORG"]]
+        }
+
+    This will create a huggingface dataset from the input, and also map the `ner_tags`
+    into a ClassLabel object which is required for training.
+    """
+    labels = sorted(set(chain.from_iterable(hf_data["ner_tags"])))
+    # O is typically the first tag. Move it there
+    if "O" in labels:
+        labels.remove("O")
+        labels.insert(0, "O")
+    ds = Dataset.from_dict(hf_data)
+    # https://github.com/python/mypy/issues/6239
+    class_label = Sequence(feature=ClassLabel(num_classes=len(labels), names=labels))
+    # First need to string index the ner_tags
+    label_to_idx = dict(zip(labels, range(len(labels))))
+    ds = ds.map(
+        lambda row: {"ner_tags": [label_to_idx[tag] for tag in row["ner_tags"]]}
+    )
+    # Then we can create the ClassLabel
+    ds = ds.cast_column("ner_tags", class_label)
+    return ds

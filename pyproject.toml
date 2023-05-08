@@ -16,6 +16,7 @@ dependencies = [
     "spacy <3",
     "pytokenizations",
     "transformers",
+    "datasets",
     "flax"  # As the backend for transformers. Smaller/Faster than torch or tf
 ]
 [[project.authors]]
