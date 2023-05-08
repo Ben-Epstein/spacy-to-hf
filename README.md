@@ -66,9 +66,9 @@ print(list(zip(hf_data["tokens"][0], hf_data["ner_tags"][0])))
 Or, if you want to immediately start fine-tuning or upload this to huggingface, you can
 run
 ```python
-hf_data = spacy_to_hf(span_data, "bert-base-cased", as_hf_dataset=True)
+ds = spacy_to_hf(span_data, "bert-base-cased", as_hf_dataset=True)
 
-print(hf_data.features["ner_tags"].feature.names)
+print(ds.features["ner_tags"].feature.names)
 ```
 This will return your data as a HuggingFace `Dataset` and will automatically
 string-index your `ner_tags` into a `ClassLabel` object
