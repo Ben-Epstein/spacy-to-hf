@@ -1,5 +1,5 @@
 # spacy-to-hf
-A simple converter from Spacy Entities to Huggingface BILOU formatted data
+A simple converter from SpaCy Entities (Spans) to Huggingface BILOU formatted data (tokens and ner_tags)
 
 I've always struggled to convert my spacy formatted spans into data that can be trained
 on using huggingface transformers. But Spacy's Entity format is the most intuitive
@@ -30,11 +30,14 @@ spans = [{"start": 18, "end": 21, "label": "person"}, ...]
 This is the common structure of output data from labeling tools like LabelStudio or LabelBox, because it's easy and human interpretable. 
 
 Huggingface format refers to the BIO/BILOU/BIOES tagging format commonly used for fine-tuning transformers. The input text is tokenized, and each token
-is given a tag to denote whether or not it's a label. Here's an example: https://huggingface.co/datasets/wikiann
+is given a tag to denote whether or not it's a label (and it's location, Beginning, Inside etc). Here's an example: https://huggingface.co/datasets/wikiann
 <img width="591" alt="image" src="https://user-images.githubusercontent.com/22605641/236639209-031c6645-e67d-43dc-8d38-be39868d2cd3.png">
 
+For more information about this tagging system, see [wikipedia](https://en.wikipedia.org/wiki/Inside%E2%80%93outside%E2%80%93beginning_(tagging))
 
-This format is tricky because it is entirely dependant on the tokenizer used. That's a core reason I built this tool. 
+
+This format is tricky, though, because it is entirely dependant on the tokenizer used. Tokens are not simply space separated words. Each tokenizer has a specific vocabulary of tokens that break down works into unique sub-words. So moving from character level spans to token level tags is a very
+manual process. That's a core reason I built this tool. 
 
 ## Installation
 ```shell
