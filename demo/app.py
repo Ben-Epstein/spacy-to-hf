@@ -39,7 +39,10 @@ if spacy_data or st.button("Or try an example"):
     if run_data:
         st.write("Spacy input data:")
         st.json(run_data)
-        hf_data = spacy_to_hf(run_data, tok)
-        df = Dataset.from_dict(hf_data).to_pandas()
-        st.write("Output huggingface format:")
-        st.dataframe(df)
+        try:
+            hf_data = spacy_to_hf(run_data, tok)
+            df = Dataset.from_dict(hf_data).to_pandas()
+            st.write("Output huggingface format:")
+            st.dataframe(df)
+        except Exception as e:
+            st.error(f"Failed to create tokens and tags: {str(e)}")
