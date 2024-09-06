@@ -3,7 +3,7 @@ from typing import Collection, Dict, List, Sequence, Union
 import spacy
 from datasets import Dataset
 from spacy.gold import biluo_tags_from_offsets
-from tokenizations import get_alignments
+from spacy_alignments import get_alignments
 from transformers import AutoTokenizer
 
 from spacy_to_hf.utils import dict_to_dataset, map_spacy_to_hf_tags

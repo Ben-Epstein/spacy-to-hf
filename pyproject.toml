@@ -14,7 +14,7 @@ description = "Spacy to HF converter"
 requires-python = ">=3.7"
 dependencies = [
     "spacy <3",
-    "pytokenizations",
+    "spacy-alignments",
     "transformers",
     "datasets",
     "flax"  # As the backend for transformers. Smaller/Faster than torch or tf
