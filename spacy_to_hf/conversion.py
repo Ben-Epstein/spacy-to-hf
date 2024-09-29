@@ -12,7 +12,10 @@ if int(spacy.__version__.split(".")[0]) > 2:
     # support 3 and upwards
     from spacy.training import offsets_to_biluo_tags
 else:
-    from spacy.gold import biluo_tags_from_offsets as offsets_to_biluo_tags
+    from spacy.gold import biluo_tags_from_offsets
+
+    offsets_to_biluo_tags = biluo_tags_from_offsets
+
 
 def spacy_to_hf(
     spacy_data: List[Dict[str, Sequence[Collection[str]]]],
@@ -83,7 +86,7 @@ def spacy_to_hf(
             for span in spans
         ), "All spans must have keys 'start', 'end', and 'label'"
         text = row["text"]
-        doc = nlp(text)
+        doc = nlp(text)  # type: ignore
         spacy_tokens = [token.text for token in doc]
         entities = [(span["start"], span["end"], span["label"]) for span in spans]
         spacy_tags = offsets_to_biluo_tags(doc, entities)

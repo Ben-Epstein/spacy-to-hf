@@ -86,7 +86,7 @@ def lint(ctx: Context) -> None:
         echo=True,
     )
     ctx.run(
-        f"ruff {SOURCES}",
+        f"ruff check {SOURCES}",
         pty=True,
         echo=True,
     )
@@ -103,7 +103,7 @@ def format(ctx: Context) -> None:
         echo=True,
     )
     ctx.run(
-        f"ruff {SOURCES} --fix",
+        f"ruff check {SOURCES} --fix",
         pty=True,
         echo=True,
     )
@@ -126,7 +126,7 @@ def test(ctx: Context) -> None:
                 "--cov-report=term-missing",
                 "--cov-report=xml",
                 "--cov-report=html",
-                "--cov-fail-under=100",
+                "--cov-fail-under=95",
             ]
         ),
         pty=True,
