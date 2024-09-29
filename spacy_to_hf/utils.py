@@ -34,9 +34,7 @@ def _get_label(tag: str) -> str:
     return tag.split("-")[1]
 
 
-def _handle_unit_tag(
-    tag: str, tokens: List[List[int]], cur_idx: int, tok_num: int
-) -> str:
+def _handle_unit_tag(tag: str, tokens: List[List[int]], cur_idx: int, tok_num: int) -> str:
     """Process a Unit tag
 
     If a Unit tagged token is broken into multiple sub-tokens, we want the first
@@ -54,9 +52,7 @@ def _handle_unit_tag(
     return clean_tag
 
 
-def _handle_begin_tag(
-    tag: str, tokens: List[List[int]], cur_idx: int, tok_num: int
-) -> str:
+def _handle_begin_tag(tag: str, tokens: List[List[int]], cur_idx: int, tok_num: int) -> str:
     """Process a Begin tag
 
     For Begin tagged tokens that are broken into sub-tokens, we know that there will be
@@ -69,9 +65,7 @@ def _handle_begin_tag(
     return clean_tag
 
 
-def _handle_last_tag(
-    tag: str, tokens: List[List[int]], cur_idx: int, tok_num: int
-) -> str:
+def _handle_last_tag(tag: str, tokens: List[List[int]], cur_idx: int, tok_num: int) -> str:
     """Process a Last tag
 
     For Last tagged tokens that are broken into sub-tokens, we know that there will be
@@ -84,9 +78,7 @@ def _handle_last_tag(
     return clean_tag
 
 
-def map_spacy_to_hf_tags(
-    hf_to_spacy: List[List[int]], spacy_tags: List[str]
-) -> List[str]:
+def map_spacy_to_hf_tags(hf_to_spacy: List[List[int]], spacy_tags: List[str]) -> List[str]:
     """Maps the spacy_tags to the required huggingface tags
 
     Leverages the hf_to_spacy map, showing how each huggingface token maps
@@ -155,9 +147,7 @@ def dict_to_dataset(hf_data: Dict[str, List[str]]) -> Dataset:
     class_label = Sequence(feature=ClassLabel(num_classes=len(labels), names=labels))
     # First need to string index the ner_tags
     label_to_idx = dict(zip(labels, range(len(labels))))
-    ds = ds.map(
-        lambda row: {"ner_tags": [label_to_idx[tag] for tag in row["ner_tags"]]}
-    )
+    ds = ds.map(lambda row: {"ner_tags": [label_to_idx[tag] for tag in row["ner_tags"]]})
     # Then we can create the ClassLabel
     ds = ds.cast_column("ner_tags", class_label)
     return ds

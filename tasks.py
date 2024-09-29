@@ -76,17 +76,17 @@ def lint(ctx: Context) -> None:
     Check typing and formatting.
     """
     ctx.run(
-        f"mypy {SOURCES}",
-        pty=True,
-        echo=True,
-    )
-    ctx.run(
-        f"black {SOURCES} --check",
+        f"ruff format {SOURCES} --check",
         pty=True,
         echo=True,
     )
     ctx.run(
         f"ruff check {SOURCES}",
+        pty=True,
+        echo=True,
+    )
+    ctx.run(
+        f"mypy {SOURCES}",
         pty=True,
         echo=True,
     )
@@ -98,7 +98,7 @@ def format(ctx: Context) -> None:
     Format the code.
     """
     ctx.run(
-        f"black {SOURCES}",
+        f"ruff format {SOURCES}",
         pty=True,
         echo=True,
     )
