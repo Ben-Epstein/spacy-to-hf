@@ -82,8 +82,7 @@ def spacy_to_hf(
         spans = row["spans"]
         assert isinstance(spans, list), "Spans must be a list"
         assert all(
-            isinstance(span, dict) and sorted(span.keys()) == ["end", "label", "start"]
-            for span in spans
+            isinstance(span, dict) and sorted(span.keys()) == ["end", "label", "start"] for span in spans
         ), "All spans must have keys 'start', 'end', and 'label'"
         text = row["text"]
         doc = nlp(text)  # type: ignore

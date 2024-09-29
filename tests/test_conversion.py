@@ -21,9 +21,7 @@ from tests.constants import (
         (SPACY_DATA_2, HF_TOKENS_2, HF_TAGS_2),
     ],
 )
-def test_spacy_to_hf(
-    spacy_data: List[Dict], hf_tokens: List[str], hf_tags: List[str]
-) -> None:
+def test_spacy_to_hf(spacy_data: List[Dict], hf_tokens: List[str], hf_tags: List[str]) -> None:
     hf_data = spacy_to_hf(spacy_data, "bert-base-cased")
     assert hf_data["tokens"][0] == hf_tokens
     assert hf_data["ner_tags"][0] == hf_tags
@@ -36,9 +34,7 @@ def test_spacy_to_hf(
         (SPACY_DATA_2, HF_TOKENS_2, HF_TAGS_2),
     ],
 )
-def test_spacy_to_hf_as_dataset(
-    spacy_data: List[Dict], hf_tokens: List[str], hf_tags: List[str]
-) -> None:
+def test_spacy_to_hf_as_dataset(spacy_data: List[Dict], hf_tokens: List[str], hf_tags: List[str]) -> None:
     hf_data = spacy_to_hf(spacy_data, "bert-base-cased", as_hf_dataset=True)
     hf_non_o_tags = [i for i in hf_tags if i != "O"]
     sorted_tags = ["O"] + sorted(set(hf_non_o_tags))
