@@ -11,9 +11,9 @@ dynamic = ["version"]
 readme = "README.md"
 license = {text = 'Apache 2.0'}
 description = "Spacy to HF converter"
-requires-python = ">=3.7"
+requires-python = ">=3.7, <3.12"
 dependencies = [
-    "spacy <3",
+    "spacy < 4",
     "pytokenizations",
     "transformers",
     "datasets",

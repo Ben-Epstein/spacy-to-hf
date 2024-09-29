@@ -2,11 +2,19 @@ from typing import Collection, Dict, List, Sequence, Union
 
 import spacy
 from datasets import Dataset
-from spacy.gold import biluo_tags_from_offsets
 from tokenizations import get_alignments
 from transformers import AutoTokenizer
 
 from spacy_to_hf.utils import dict_to_dataset, map_spacy_to_hf_tags
+
+# make sure to support multiple spacy versions
+if int(spacy.__version__.split(".")[0]) > 2:
+    # support 3 and upwards
+    from spacy.training import offsets_to_biluo_tags
+else:
+    from spacy.gold import biluo_tags_from_offsets
+
+    offsets_to_biluo_tags = biluo_tags_from_offsets
 
 
 def spacy_to_hf(
@@ -78,10 +86,10 @@ def spacy_to_hf(
             for span in spans
         ), "All spans must have keys 'start', 'end', and 'label'"
         text = row["text"]
-        doc = nlp(text)
+        doc = nlp(text)  # type: ignore
         spacy_tokens = [token.text for token in doc]
         entities = [(span["start"], span["end"], span["label"]) for span in spans]
-        spacy_tags = biluo_tags_from_offsets(doc, entities)
+        spacy_tags = offsets_to_biluo_tags(doc, entities)
         hf_tokens = tok.tokenize(text)
         _, hf_to_spacy = get_alignments(spacy_tokens, hf_tokens)
         hf_tags = map_spacy_to_hf_tags(hf_to_spacy, spacy_tags)
